@@ -1,13 +1,13 @@
 from django.db import models
 
 # Create your models here.
-class Company():
+class Company(models.Model):
     company_name = models.CharField(max_length=200)
-    company_contact_email = EmailField(max_length=254)
+    company_contact_email = models.EmailField(max_length=254)
     company_contact_phone = models.CharField(max_length=200)
-    accounts_receivable_email = EmailField(max_length=254)
+    accounts_receivable_email = models.EmailField(max_length=254)
     company_type = models.CharField(
-        max_length=2,
+        max_length=20,
         choices=[
 		('SUPPLIER', 'Supplier'),
 		('VENDOR', 'Vendor'),
@@ -23,6 +23,6 @@ class Individual(models.Model):
     last_name = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=200)
     interested_in_marketing_email = models.BooleanField()
-    customer_email = EmailField(max_length=254)
-    company = ForeignKey('Company',
-			 on_delete='models.CASCADE')
+    customer_email = models.EmailField(max_length=254)
+    company = models.ForeignKey('Company',
+			 on_delete=models.CASCADE)
