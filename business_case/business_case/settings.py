@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-n-(v1kiqs!lahcwypwo*f^87on7$c1#!s1y@o_!^$5eoy9s6j1'
-
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'app',
         'USER': 'root',
-        'PASSWORD': ']=}Q<C,o$b[I=.6<g4<l5@"cxO6r,h"7',
+        'PASSWORD': 'my-secret-pw',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
