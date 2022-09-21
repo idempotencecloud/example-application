@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./sql_scripts:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: app
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  app:
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - "db"
+
