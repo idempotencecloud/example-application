@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'app',
         'USER': 'appuser',
         'PASSWORD': 'my-secret-pw',
-        'HOST': 'db',
+        'HOST': '10.88.0.1',
         'PORT': '3306',
     }
 }

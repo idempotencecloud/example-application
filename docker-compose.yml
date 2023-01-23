@@ -5,6 +5,8 @@ services:
   db:
     image: mariadb
     restart: always
+    ports:
+      - 3306:3306
     volumes:
       - ./sql_scripts:/docker-entrypoint-initdb.d
     environment:
