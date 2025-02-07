@@ -1,0 +1,31 @@
+<!-- app/templates/index.html -->
+<h1>Example Application</h1>
+
+<form method="post">
+  {% csrf_token %} {{ company_form.as_p }} {{ individual_form.as_p }}
+  <button type="submit">Submit</button>
+</form>
+
+<h2>Companies</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Company Name</th>
+      <th>Contact Email</th>
+      <th>Contact Phone</th>
+      <th>Accounts Receivable Email</th>
+      <th>Company Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for company in companies %}
+    <tr>
+      <td>{{ company.company_name }}</td>
+      <td>{{ company.company_contact_email }}</td>
+      <td>{{ company.company_contact_phone }}</td>
+      <td>{{ company.accounts_receivable_email }}</td>
+      <td>{{ company.company_type }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
