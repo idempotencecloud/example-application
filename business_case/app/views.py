@@ -24,8 +24,7 @@ def index(request):
             'company_type': 'CUSTOMER',
         })
 
-
-    companies = Company.objects.all().order_by('-id')
+    companies = Company.objects.all().order_by('-id')[0:10]
     context = {
         'company_form': company_form,
         'companies': companies,
