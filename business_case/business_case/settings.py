@@ -26,7 +26,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+CSRF_TRUSTED_ORIGINS = ['*']
 
 # Application definition
 
