@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mariadb
+spec:
+  serviceName: "mariadb"
+  replicas: 1 # Adjust as needed
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+        - name: mariadb
+          image: mariadb:latest # Or specify a version
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secrets # Create this secret
+                  key: mysql-root-password
+            - name: MYSQL_DATABASE
+              value: app # Replace with your database name
+            - name: MYSQL_USER
+              value: appuser # Replace with your username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secrets # Create this secret
+                  key: mysql-password
+          volumeMounts:
+            - name: mariadb-data
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mariadb-data
+          persistentVolumeClaim:
+            claimName: mariadb-pvc # Create this PVC
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Equal"
+          value: ""
+          effect: "NoSchedule"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce # Or ReadWriteMany if using shared storage
+  resources:
+    requests:
+      storage: 1Gi # Adjust as needed
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mariadb-secrets
+type: Opaque
+stringData: # Use stringData for plain text or data for base64 encoded secrets
+  mysql-root-password: PLEASE_PROVIDE_PASSWORD_HERE # Replace with a strong password
+  mysql-password: my-secret-pw # Replace with a strong password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: mariadb

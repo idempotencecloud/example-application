@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mariadb-pv-2 # Choose a unique name
+spec:
+  capacity:
+    storage: 1Gi # Match PVC storage request
+  accessModes:
+    - ReadWriteOnce # Match PVC access modes
+  persistentVolumeReclaimPolicy: Retain # Or Delete
+  hostPath:  # Add this section
+    path: /var/lib/mariadb-data  # Replace with a real path on your host
+    type: DirectoryOrCreate # Creates the directory if it doesn't exist
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - idempotence-poc-kubernetes
+  # Configure the storage backend (choose ONE):
+  # hostPath (for testing ONLY - NOT production):
+  # hostPath:
+  #   path: /path/on/host/mariadb-data # Replace with a real path
+  # nfs:
+  #   server: <nfs-server-ip>
+  #   path: /path/on/nfs/mariadb-data
+  # cloud provider disk (AWS, GCP, Azure):
+  # ... (see Kubernetes docs for cloud-specific config)
