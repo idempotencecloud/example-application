@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gxp-track-auditable-containerization-demo-service # Name of your service
+spec:
+  selector:
+    app: gxp-track-auditable-containerization-demo # Matches the labels of your Redis Pod
+  ports:
+    - protocol: TCP # Protocol used by Redis
+      port: 8000 # Port exposed by the service (external)
+      targetPort: 8000 # Port the container is listening on (internal)
+      name: webservice
+    - protocol: TCP # Protocol used by Redis
+      port: 8989 # Port exposed by the service (external)
+      targetPort: 8989 # Port the container is listening on (internal)
+      name: diagnostics

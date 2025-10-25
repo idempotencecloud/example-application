@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: standard # Or any name you choose
+provisioner: kubernetes.io/no-provisioner # Example: kubernetes.io/aws-ebs, kubernetes.io/gce-pd, etc.
+parameters:
+  type: gp2 # Example for AWS EBS. Adjust for your provisioner.
+reclaimPolicy: Retain # Or Delete, depending on your needs
