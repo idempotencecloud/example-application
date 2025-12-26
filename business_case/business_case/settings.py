@@ -80,7 +80,8 @@ DATABASES = {
         'NAME': 'app',
         'USER': 'appuser',
         'PASSWORD': 'my-secret-pw',
-        'HOST': '10.101.151.201',
+        # 'HOST': '10.101.151.201', # K8s Example DB Host
+        'HOST': 'db',
         'PORT': '3306',
     }
 }
